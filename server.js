@@ -13,7 +13,7 @@ const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD || process.env.DB_NAME, // Fallback to DB_NAME if DB_PASSWORD is not set
-    database: 'expertise_station',
+    database: 'expert_db',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
