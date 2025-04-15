@@ -11,15 +11,16 @@ app.use(express.json());
 // Database connection pool
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
+    port: process.env.DB_PORT || 3306,
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD || process.env.DB_NAME, // Fallback to DB_NAME if DB_PASSWORD is not set
-    database: 'expert_db',
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
-    ssl: process.env.NODE_ENV === 'production' ? {
-        rejectUnauthorized: true
-    } : false
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
 // Add this line after creating the pool:
@@ -114,7 +115,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
