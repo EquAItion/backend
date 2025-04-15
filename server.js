@@ -12,11 +12,15 @@ app.use(express.json());
 const pool = mysql.createPool({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
+    password: process.env.DB_NAME || '',  // Using DB_NAME as password since it contains the actual password
     database: 'expertise_station',
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
+    ssl: {
+        rejectUnauthorized: true
+    },
+    socketPath: `/cloudsql/${process.env.DB_HOST}`
 });
 
 // Add this line after creating the pool:
